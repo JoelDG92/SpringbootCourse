@@ -24,8 +24,23 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
     @RequestMapping(value = "/users", method=RequestMethod.GET, produces= "application/json")
-    public ResponseEntity getUser(){
-        List<UserTO> userTOList=userFacade.getUser();
+    public ResponseEntity getUser(@RequestParam(value = "page",defaultValue ="0",required = false) int page,
+                                  @RequestParam(value = "size",defaultValue ="10",required = false) int size,
+                                  @RequestParam(value = "property",defaultValue ="name",required = false) String property,
+                                  @RequestParam(value = "direcction",defaultValue ="asc",required = false) String direcction){
+        List<UserTO> userTOList=userFacade.getUser(page,size,property,direcction);
         return new ResponseEntity(userTOList,HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/users/{id}", method = RequestMethod.DELETE,produces = "application/json")
+    public ResponseEntity deleteUser(@PathVariable("id")Long id){
+        userFacade.deleteUser(id);
+        return new ResponseEntity(HttpStatus.OK);
+
+    }
+    @RequestMapping(value="/users", method = RequestMethod.PUT,produces = "application/json")
+    public ResponseEntity updateUser(@RequestBody UserTO userTO) {
+        userFacade.updateUser(userTO);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

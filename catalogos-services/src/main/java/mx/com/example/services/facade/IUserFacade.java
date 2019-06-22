@@ -6,5 +6,8 @@ import java.util.List;
 
 public interface IUserFacade {
     void saveUser(UserTO userTO);
-     List<UserTO> getUser();
+     List<UserTO> getUser(int page,int size,String property,String direction);
+    void deleteUser(Long id);
+
+    void updateUser(UserTO userTO);
 }
